@@ -1,0 +1,90 @@
+import { Vehicle } from '@/data/mockData';
+import { cn } from '@/lib/utils';
+import { Car, Thermometer, Battery, Gauge, Disc, Droplets, MapPin } from 'lucide-react';
+
+interface VehicleCardProps {
+  vehicle: Vehicle;
+  selected?: boolean;
+  onClick?: () => void;
+}
+
+const getRiskColor = (risk: Vehicle['riskLevel']) => {
+  switch (risk) {
+    case 'low': return 'text-success';
+    case 'medium': return 'text-warning';
+    case 'high': return 'text-orange-500';
+    case 'critical': return 'text-destructive';
+  }
+};
+
+const getRiskBg = (risk: Vehicle['riskLevel']) => {
+  switch (risk) {
+    case 'low': return 'bg-success/10 border-success/30';
+    case 'medium': return 'bg-warning/10 border-warning/30';
+    case 'high': return 'bg-orange-500/10 border-orange-500/30';
+    case 'critical': return 'bg-destructive/10 border-destructive/30';
+  }
+};
+
+export const VehicleCard = ({ vehicle, selected, onClick }: VehicleCardProps) => {
+  return (
+    <div
+      onClick={onClick}
+      className={cn(
+        'glass-card p-4 cursor-pointer transition-all duration-300 hover:border-primary/50',
+        selected && 'border-primary ring-1 ring-primary/30'
+      )}
+    >
+      <div className="flex items-start justify-between mb-3">
+        <div className="flex items-center gap-3">
+          <div className={cn('p-2 rounded-lg', getRiskBg(vehicle.riskLevel))}>
+            <Car className={cn('w-5 h-5', getRiskColor(vehicle.riskLevel))} />
+          </div>
+          <div>
+            <h3 className="font-medium text-foreground">{vehicle.name}</h3>
+            <p className="text-xs text-muted-foreground">{vehicle.model}</p>
+          </div>
+        </div>
+        <div className="text-right">
+          <div className={cn('text-2xl font-mono font-bold', getRiskColor(vehicle.riskLevel))}>
+            {vehicle.healthScore}
+          </div>
+          <p className="text-xs text-muted-foreground uppercase">{vehicle.riskLevel}</p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-5 gap-2 mb-3">
+        <MetricMini icon={Thermometer} value={vehicle.engineTemp} unit="°C" warn={vehicle.engineTemp > 100} />
+        <MetricMini icon={Gauge} value={vehicle.tyrePressure} unit="psi" warn={vehicle.tyrePressure < 30} />
+        <MetricMini icon={Battery} value={vehicle.batteryLevel} unit="%" warn={vehicle.batteryLevel < 70} />
+        <MetricMini icon={Disc} value={vehicle.brakeWear} unit="%" warn={vehicle.brakeWear > 60} />
+        <MetricMini icon={Droplets} value={vehicle.coolantLevel} unit="%" warn={vehicle.coolantLevel < 80} />
+      </div>
+
+      <div className="flex items-center justify-between text-xs text-muted-foreground">
+        <div className="flex items-center gap-1">
+          <MapPin className="w-3 h-3" />
+          {vehicle.location}
+        </div>
+        <span>{vehicle.lastUpdated}</span>
+      </div>
+    </div>
+  );
+};
+
+interface MetricMiniProps {
+  icon: React.ElementType;
+  value: number;
+  unit: string;
+  warn?: boolean;
+}
+
+const MetricMini = ({ icon: Icon, value, unit, warn }: MetricMiniProps) => (
+  <div className="text-center">
+    <Icon className={cn('w-3.5 h-3.5 mx-auto mb-0.5', warn ? 'text-warning' : 'text-muted-foreground')} />
+    <span className={cn('text-xs font-mono', warn ? 'text-warning' : 'text-foreground')}>
+      {value}
+      <span className="text-muted-foreground">{unit}</span>
+    </span>
+  </div>
+);

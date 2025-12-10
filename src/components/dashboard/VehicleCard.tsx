@@ -1,6 +1,8 @@
 import { Vehicle } from '@/data/mockData';
 import { cn } from '@/lib/utils';
-import { Car, Thermometer, Battery, Gauge, Disc, Droplets, MapPin } from 'lucide-react';
+import { Car, Thermometer, Battery, Gauge, Disc, Droplets, MapPin, ExternalLink } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
@@ -27,6 +29,8 @@ const getRiskBg = (risk: Vehicle['riskLevel']) => {
 };
 
 export const VehicleCard = ({ vehicle, selected, onClick }: VehicleCardProps) => {
+  const navigate = useNavigate();
+  
   return (
     <div
       onClick={onClick}
@@ -66,7 +70,20 @@ export const VehicleCard = ({ vehicle, selected, onClick }: VehicleCardProps) =>
           <MapPin className="w-3 h-3" />
           {vehicle.location}
         </div>
-        <span>{vehicle.lastUpdated}</span>
+        <div className="flex items-center gap-2">
+          <span>{vehicle.lastUpdated}</span>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-6 w-6"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/vehicle/${vehicle.id}`);
+            }}
+          >
+            <ExternalLink className="w-3.5 h-3.5" />
+          </Button>
+        </div>
       </div>
     </div>
   );

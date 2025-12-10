@@ -9,6 +9,9 @@ import VoiceAssistant from "./pages/VoiceAssistant";
 import Scheduling from "./pages/Scheduling";
 import Security from "./pages/Security";
 import Insights from "./pages/Insights";
+import Analytics from "./pages/Analytics";
+import FleetComparison from "./pages/FleetComparison";
+import VehicleDetail from "./pages/VehicleDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +25,9 @@ const App = () => (
         <Routes>
           <Route element={<AppLayout />}>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/compare" element={<FleetComparison />} />
+            <Route path="/vehicle/:id" element={<VehicleDetail />} />
             <Route path="/voice" element={<VoiceAssistant />} />
             <Route path="/scheduling" element={<Scheduling />} />
             <Route path="/security" element={<Security />} />

@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { vehicles, predictiveAlerts, agentActivities, Vehicle } from '@/data/mockData';
+import { fleetMetricsHistory } from '@/data/extendedMockData';
 import { VehicleCard } from '@/components/dashboard/VehicleCard';
 import { AlertPanel } from '@/components/dashboard/AlertPanel';
 import { AgentActivityPanel } from '@/components/dashboard/AgentActivityPanel';
 import { TelemetryGauge } from '@/components/dashboard/TelemetryGauge';
-import { Thermometer, Gauge, Battery, Disc, Droplets, RefreshCw, Bell } from 'lucide-react';
+import { Thermometer, Gauge, Battery, Disc, Droplets, RefreshCw, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { exportFleetReport } from '@/utils/exportPdf';
+import { toast } from '@/hooks/use-toast';
 
 const Dashboard = () => {
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(vehicles[3]); // VH-004 critical
@@ -23,9 +26,16 @@ const Dashboard = () => {
             <RefreshCw className="w-4 h-4" />
             Refresh
           </Button>
-          <Button size="sm" className="gap-2 bg-primary hover:bg-primary/90">
-            <Bell className="w-4 h-4" />
-            3 Alerts
+          <Button 
+            size="sm" 
+            className="gap-2 bg-primary hover:bg-primary/90"
+            onClick={() => {
+              exportFleetReport(vehicles, predictiveAlerts, fleetMetricsHistory);
+              toast({ title: 'Report Generated', description: 'Fleet report PDF downloaded successfully' });
+            }}
+          >
+            <Download className="w-4 h-4" />
+            Export PDF
           </Button>
         </div>
       </div>

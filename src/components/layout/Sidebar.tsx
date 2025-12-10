@@ -7,13 +7,17 @@ import {
   FileSearch,
   Bot,
   ChevronLeft,
-  Activity
+  Activity,
+  BarChart3,
+  GitCompare
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
+  { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+  { icon: GitCompare, label: 'Compare', path: '/compare' },
   { icon: Mic, label: 'Voice Assistant', path: '/voice' },
   { icon: Calendar, label: 'Scheduling', path: '/scheduling' },
   { icon: Shield, label: 'UEBA Security', path: '/security' },

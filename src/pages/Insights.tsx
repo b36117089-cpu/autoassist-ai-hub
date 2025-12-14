@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { rcaItems } from '@/data/mockData';
+import { useRealtimeDefects } from '@/hooks/useRealtimeDefects';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { 
@@ -18,6 +18,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Insights = () => {
+  const { defects, isLoading, stats } = useRealtimeDefects();
   const [sendDialogOpen, setSendDialogOpen] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [manufacturingResponse, setManufacturingResponse] = useState<null | {
@@ -42,8 +43,8 @@ const Insights = () => {
   const maxValue = Math.max(...trendData.flatMap(d => [d.brake, d.battery, d.coolant]));
 
   const filteredItems = activeFilter === 'all' 
-    ? rcaItems 
-    : rcaItems.filter(item => item.status === activeFilter);
+    ? defects 
+    : defects.filter(item => item.status === activeFilter);
 
   const handleSendToManufacturing = async () => {
     setIsSending(true);
@@ -160,7 +161,7 @@ const Insights = () => {
               <AlertCircle className="w-5 h-5 text-destructive" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-foreground">355</p>
+              <p className="text-2xl font-bold text-foreground">{stats.totalDefects}</p>
               <p className="text-xs text-muted-foreground">Total Defects</p>
             </div>
           </div>
@@ -171,7 +172,7 @@ const Insights = () => {
               <Clock className="w-5 h-5 text-warning" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-foreground">2</p>
+              <p className="text-2xl font-bold text-foreground">{stats.inProgress}</p>
               <p className="text-xs text-muted-foreground">In Progress</p>
             </div>
           </div>
@@ -182,7 +183,7 @@ const Insights = () => {
               <CheckCircle className="w-5 h-5 text-success" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-foreground">1</p>
+              <p className="text-2xl font-bold text-foreground">{stats.resolved}</p>
               <p className="text-xs text-muted-foreground">Resolved</p>
             </div>
           </div>
@@ -193,7 +194,7 @@ const Insights = () => {
               <Wrench className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-foreground">8</p>
+              <p className="text-2xl font-bold text-foreground">{stats.capaActions}</p>
               <p className="text-xs text-muted-foreground">CAPA Actions</p>
             </div>
           </div>
@@ -349,7 +350,7 @@ const Insights = () => {
               Top Recurring Defects
             </h3>
             <div className="space-y-3">
-              {rcaItems.slice(0, 4).map((item, i) => (
+              {defects.slice(0, 4).map((item, i) => (
                 <div key={item.id} className="flex items-center gap-3">
                   <span className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs font-medium text-muted-foreground">
                     {i + 1}

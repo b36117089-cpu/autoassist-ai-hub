@@ -14,7 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      defects: {
+        Row: {
+          component: string
+          corrective_action: string | null
+          created_at: string
+          defect_code: string
+          description: string
+          detected_at: string
+          frequency: number
+          id: string
+          resolved_at: string | null
+          root_cause: string | null
+          severity: string
+          status: string
+          updated_at: string
+          vehicle_id: string
+        }
+        Insert: {
+          component: string
+          corrective_action?: string | null
+          created_at?: string
+          defect_code: string
+          description: string
+          detected_at?: string
+          frequency?: number
+          id?: string
+          resolved_at?: string | null
+          root_cause?: string | null
+          severity?: string
+          status?: string
+          updated_at?: string
+          vehicle_id: string
+        }
+        Update: {
+          component?: string
+          corrective_action?: string | null
+          created_at?: string
+          defect_code?: string
+          description?: string
+          detected_at?: string
+          frequency?: number
+          id?: string
+          resolved_at?: string | null
+          root_cause?: string | null
+          severity?: string
+          status?: string
+          updated_at?: string
+          vehicle_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

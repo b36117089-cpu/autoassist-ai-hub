@@ -1,9 +1,35 @@
+import { useState } from 'react';
 import { rcaItems } from '@/data/mockData';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { FileSearch, TrendingUp, TrendingDown, Minus, Send, Wrench, AlertCircle, CheckCircle, Clock } from 'lucide-react';
+import { 
+  FileSearch, TrendingUp, TrendingDown, Minus, Send, Wrench, AlertCircle, 
+  CheckCircle, Clock, Download, Mail, RefreshCw, Filter, BarChart3, 
+  Target, Lightbulb, Zap, ArrowRight 
+} from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Insights = () => {
+  const [sendDialogOpen, setSendDialogOpen] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [manufacturingResponse, setManufacturingResponse] = useState<null | {
+    status: string;
+    ticketId: string;
+    assignedTeam: string;
+    estimatedResolution: string;
+    priorityItems: string[];
+    recommendations: string[];
+  }>(null);
+  const [activeFilter, setActiveFilter] = useState<'all' | 'open' | 'in-progress' | 'resolved'>('all');
+
   const trendData = [
     { month: 'Jul', brake: 12, battery: 8, coolant: 5 },
     { month: 'Aug', brake: 18, battery: 10, coolant: 7 },
@@ -15,22 +41,120 @@ const Insights = () => {
 
   const maxValue = Math.max(...trendData.flatMap(d => [d.brake, d.battery, d.coolant]));
 
+  const filteredItems = activeFilter === 'all' 
+    ? rcaItems 
+    : rcaItems.filter(item => item.status === activeFilter);
+
+  const handleSendToManufacturing = async () => {
+    setIsSending(true);
+    
+    // Simulate API call to manufacturing system
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Mock response from manufacturing team
+    setManufacturingResponse({
+      status: 'Acknowledged',
+      ticketId: `MFG-${Date.now().toString().slice(-6)}`,
+      assignedTeam: 'Quality Assurance Division',
+      estimatedResolution: '5-7 business days',
+      priorityItems: [
+        'Brake Pad Wear - Critical priority, affecting 156 vehicles',
+        'Battery Degradation - High priority, supplier review initiated',
+        'Coolant System Leaks - Medium priority, design review scheduled'
+      ],
+      recommendations: [
+        'Implement enhanced incoming inspection for brake components',
+        'Negotiate with alternate battery suppliers for improved cell quality',
+        'Update coolant system design specifications for Q2 production',
+        'Schedule recall campaign for affected brake pad batches',
+        'Deploy IoT sensors for real-time quality monitoring'
+      ]
+    });
+    
+    setIsSending(false);
+    setSendDialogOpen(true);
+    
+    toast({
+      title: "Report Sent Successfully",
+      description: "Manufacturing team has been notified of the RCA/CAPA findings.",
+    });
+  };
+
+  const handleGenerateReport = () => {
+    toast({
+      title: "Report Generated",
+      description: "PDF report has been downloaded to your device.",
+    });
+  };
+
+  const handleExportData = () => {
+    toast({
+      title: "Data Exported",
+      description: "CSV export completed successfully.",
+    });
+  };
+
+  const handleRefreshAnalysis = () => {
+    toast({
+      title: "Analysis Refreshing",
+      description: "Fetching latest telemetry data for analysis...",
+    });
+  };
+
+  // AI-generated improvement suggestions
+  const aiSuggestions = [
+    {
+      id: 1,
+      title: 'Predictive Supplier Scoring',
+      description: 'Implement ML-based supplier quality scoring to preempt component failures',
+      impact: 'High',
+      effort: 'Medium',
+      icon: Target,
+    },
+    {
+      id: 2,
+      title: 'Automated Defect Clustering',
+      description: 'Use clustering algorithms to identify hidden defect patterns across models',
+      impact: 'High',
+      effort: 'Low',
+      icon: BarChart3,
+    },
+    {
+      id: 3,
+      title: 'Real-time Quality Gates',
+      description: 'Deploy IoT sensors at production checkpoints for instant defect detection',
+      impact: 'Critical',
+      effort: 'High',
+      icon: Zap,
+    },
+  ];
+
   return (
     <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-2xl font-bold text-foreground">RCA/CAPA Insights</h1>
           <p className="text-muted-foreground">Root Cause Analysis & Corrective Actions</p>
         </div>
-        <Button className="gap-2 bg-primary hover:bg-primary/90">
-          <Send className="w-4 h-4" />
-          Send to Manufacturing
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" className="gap-2" onClick={handleRefreshAnalysis}>
+            <RefreshCw className="w-4 h-4" />
+            Refresh
+          </Button>
+          <Button variant="outline" size="sm" className="gap-2" onClick={handleExportData}>
+            <Download className="w-4 h-4" />
+            Export
+          </Button>
+          <Button className="gap-2 bg-primary hover:bg-primary/90" onClick={handleSendToManufacturing} disabled={isSending}>
+            {isSending ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+            {isSending ? 'Sending...' : 'Send to Manufacturing'}
+          </Button>
+        </div>
       </div>
 
       {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="glass-card p-4">
+        <div className="glass-card p-4 cursor-pointer hover:border-destructive/50 transition-colors" onClick={() => setActiveFilter('open')}>
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-destructive/20">
               <AlertCircle className="w-5 h-5 text-destructive" />
@@ -41,7 +165,7 @@ const Insights = () => {
             </div>
           </div>
         </div>
-        <div className="glass-card p-4">
+        <div className="glass-card p-4 cursor-pointer hover:border-warning/50 transition-colors" onClick={() => setActiveFilter('in-progress')}>
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-warning/20">
               <Clock className="w-5 h-5 text-warning" />
@@ -52,7 +176,7 @@ const Insights = () => {
             </div>
           </div>
         </div>
-        <div className="glass-card p-4">
+        <div className="glass-card p-4 cursor-pointer hover:border-success/50 transition-colors" onClick={() => setActiveFilter('resolved')}>
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-success/20">
               <CheckCircle className="w-5 h-5 text-success" />
@@ -63,7 +187,7 @@ const Insights = () => {
             </div>
           </div>
         </div>
-        <div className="glass-card p-4">
+        <div className="glass-card p-4 cursor-pointer hover:border-primary/50 transition-colors" onClick={() => setActiveFilter('all')}>
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-primary/20">
               <Wrench className="w-5 h-5 text-primary" />
@@ -76,47 +200,75 @@ const Insights = () => {
         </div>
       </div>
 
+      {/* Filter Pills */}
+      <div className="flex items-center gap-2">
+        <Filter className="w-4 h-4 text-muted-foreground" />
+        <span className="text-sm text-muted-foreground mr-2">Filter:</span>
+        {(['all', 'open', 'in-progress', 'resolved'] as const).map((filter) => (
+          <button
+            key={filter}
+            onClick={() => setActiveFilter(filter)}
+            className={cn(
+              'px-3 py-1 rounded-full text-xs font-medium transition-colors',
+              activeFilter === filter 
+                ? 'bg-primary text-primary-foreground' 
+                : 'bg-muted text-muted-foreground hover:bg-muted/80'
+            )}
+          >
+            {filter === 'all' ? 'All' : filter === 'in-progress' ? 'In Progress' : filter.charAt(0).toUpperCase() + filter.slice(1)}
+          </button>
+        ))}
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Defect List & RCA Cards */}
         <div className="lg:col-span-2 space-y-4">
-          {rcaItems.map((item) => (
-            <div key={item.id} className="glass-card p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="font-semibold text-foreground">{item.defectType}</h3>
-                    <StatusBadge status={item.status} />
-                    <TrendIndicator trend={item.trend} />
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    {item.occurrences} occurrences • Affecting {item.affectedModels.join(', ')}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <span className="text-2xl font-mono font-bold text-warning">{item.occurrences}</span>
-                  <p className="text-xs text-muted-foreground">cases</p>
-                </div>
-              </div>
-
-              {/* Root Cause Card */}
-              <div className="p-4 rounded-lg bg-muted/30 mb-4">
-                <h4 className="text-xs font-medium text-muted-foreground uppercase mb-2">Root Cause</h4>
-                <p className="text-sm text-foreground">{item.rootCause}</p>
-              </div>
-
-              {/* Corrective Action Card */}
-              <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-                <h4 className="text-xs font-medium text-primary uppercase mb-2 flex items-center gap-1">
-                  <Wrench className="w-3 h-3" />
-                  AI-Generated Corrective Action
-                </h4>
-                <p className="text-sm text-foreground">{item.correctiveAction}</p>
-              </div>
+          {filteredItems.length === 0 ? (
+            <div className="glass-card p-12 text-center">
+              <CheckCircle className="w-12 h-12 text-success mx-auto mb-4" />
+              <h3 className="font-semibold text-foreground mb-2">No items found</h3>
+              <p className="text-sm text-muted-foreground">No defects match the current filter criteria.</p>
             </div>
-          ))}
+          ) : (
+            filteredItems.map((item) => (
+              <div key={item.id} className="glass-card p-6 hover:border-primary/30 transition-colors">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="font-semibold text-foreground">{item.defectType}</h3>
+                      <StatusBadge status={item.status} />
+                      <TrendIndicator trend={item.trend} />
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      {item.occurrences} occurrences • Affecting {item.affectedModels.join(', ')}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-2xl font-mono font-bold text-warning">{item.occurrences}</span>
+                    <p className="text-xs text-muted-foreground">cases</p>
+                  </div>
+                </div>
+
+                {/* Root Cause Card */}
+                <div className="p-4 rounded-lg bg-muted/30 mb-4">
+                  <h4 className="text-xs font-medium text-muted-foreground uppercase mb-2">Root Cause</h4>
+                  <p className="text-sm text-foreground">{item.rootCause}</p>
+                </div>
+
+                {/* Corrective Action Card */}
+                <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
+                  <h4 className="text-xs font-medium text-primary uppercase mb-2 flex items-center gap-1">
+                    <Wrench className="w-3 h-3" />
+                    AI-Generated Corrective Action
+                  </h4>
+                  <p className="text-sm text-foreground">{item.correctiveAction}</p>
+                </div>
+              </div>
+            ))
+          )}
         </div>
 
-        {/* Trend Charts */}
+        {/* Trend Charts & Insights */}
         <div className="space-y-6">
           {/* Failure Frequency Chart */}
           <div className="glass-card p-4">
@@ -156,6 +308,40 @@ const Insights = () => {
             </div>
           </div>
 
+          {/* AI Suggestions */}
+          <div className="glass-card p-4">
+            <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+              <Lightbulb className="w-4 h-4 text-warning" />
+              AI Improvement Suggestions
+            </h3>
+            <div className="space-y-3">
+              {aiSuggestions.map((suggestion) => (
+                <div key={suggestion.id} className="p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer">
+                  <div className="flex items-start gap-3">
+                    <div className="p-1.5 rounded bg-primary/20">
+                      <suggestion.icon className="w-4 h-4 text-primary" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground">{suggestion.title}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">{suggestion.description}</p>
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className={cn(
+                          'px-2 py-0.5 rounded text-xs font-medium',
+                          suggestion.impact === 'Critical' ? 'bg-destructive/20 text-destructive' :
+                          suggestion.impact === 'High' ? 'bg-warning/20 text-warning' :
+                          'bg-muted text-muted-foreground'
+                        )}>
+                          {suggestion.impact} Impact
+                        </span>
+                        <span className="text-xs text-muted-foreground">{suggestion.effort} Effort</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Top Recurring Defects */}
           <div className="glass-card p-4">
             <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
@@ -192,13 +378,98 @@ const Insights = () => {
             <p className="text-sm text-muted-foreground mb-4">
               2 defect patterns require immediate attention from the manufacturing team.
             </p>
-            <Button className="w-full gap-2" variant="outline">
-              <Send className="w-4 h-4" />
+            <Button className="w-full gap-2" variant="outline" onClick={handleGenerateReport}>
+              <Download className="w-4 h-4" />
               Generate Report
             </Button>
           </div>
         </div>
       </div>
+
+      {/* Manufacturing Response Dialog */}
+      <Dialog open={sendDialogOpen} onOpenChange={setSendDialogOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-success" />
+              Manufacturing Response Received
+            </DialogTitle>
+            <DialogDescription>
+              The manufacturing team has acknowledged your RCA/CAPA report.
+            </DialogDescription>
+          </DialogHeader>
+          
+          {manufacturingResponse && (
+            <Tabs defaultValue="summary" className="mt-4">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="summary">Summary</TabsTrigger>
+                <TabsTrigger value="priorities">Priorities</TabsTrigger>
+                <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="summary" className="space-y-4 mt-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 rounded-lg bg-muted/30">
+                    <p className="text-xs text-muted-foreground uppercase">Status</p>
+                    <p className="text-lg font-semibold text-success">{manufacturingResponse.status}</p>
+                  </div>
+                  <div className="p-4 rounded-lg bg-muted/30">
+                    <p className="text-xs text-muted-foreground uppercase">Ticket ID</p>
+                    <p className="text-lg font-mono font-semibold text-foreground">{manufacturingResponse.ticketId}</p>
+                  </div>
+                  <div className="p-4 rounded-lg bg-muted/30">
+                    <p className="text-xs text-muted-foreground uppercase">Assigned Team</p>
+                    <p className="text-sm font-medium text-foreground">{manufacturingResponse.assignedTeam}</p>
+                  </div>
+                  <div className="p-4 rounded-lg bg-muted/30">
+                    <p className="text-xs text-muted-foreground uppercase">Est. Resolution</p>
+                    <p className="text-sm font-medium text-foreground">{manufacturingResponse.estimatedResolution}</p>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="priorities" className="mt-4">
+                <div className="space-y-3">
+                  {manufacturingResponse.priorityItems.map((item, i) => (
+                    <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30">
+                      <span className={cn(
+                        'w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold',
+                        i === 0 ? 'bg-destructive/20 text-destructive' :
+                        i === 1 ? 'bg-warning/20 text-warning' :
+                        'bg-muted text-muted-foreground'
+                      )}>
+                        {i + 1}
+                      </span>
+                      <p className="text-sm text-foreground">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="recommendations" className="mt-4">
+                <div className="space-y-2">
+                  {manufacturingResponse.recommendations.map((rec, i) => (
+                    <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10">
+                      <ArrowRight className="w-4 h-4 text-primary flex-shrink-0" />
+                      <p className="text-sm text-foreground">{rec}</p>
+                    </div>
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
+          )}
+          
+          <div className="flex justify-end gap-2 mt-4">
+            <Button variant="outline" onClick={() => setSendDialogOpen(false)}>
+              Close
+            </Button>
+            <Button className="gap-2">
+              <Mail className="w-4 h-4" />
+              Email Report
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

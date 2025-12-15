@@ -1,8 +1,9 @@
 import { Vehicle } from '@/data/mockData';
 import { cn } from '@/lib/utils';
-import { Car, Thermometer, Battery, Gauge, Disc, Droplets, MapPin, ExternalLink } from 'lucide-react';
+import { Car, Thermometer, Battery, Gauge, Disc, Droplets, MapPin, ExternalLink, Bike, Zap, Fuel, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
@@ -28,8 +29,24 @@ const getRiskBg = (risk: Vehicle['riskLevel']) => {
   }
 };
 
+const getVehicleIcon = (vehicleType: Vehicle['vehicleType']) => {
+  switch (vehicleType) {
+    case 'two-wheeler': return Bike;
+    case 'electric': return Zap;
+    default: return Car;
+  }
+};
+
+const getBrandColor = (brand: Vehicle['brand']) => {
+  switch (brand) {
+    case 'Hero': return 'bg-red-500/20 text-red-400 border-red-500/30';
+    case 'Mahindra': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+  }
+};
+
 export const VehicleCard = ({ vehicle, selected, onClick }: VehicleCardProps) => {
   const navigate = useNavigate();
+  const VehicleIcon = getVehicleIcon(vehicle.vehicleType);
   
   return (
     <div
@@ -42,10 +59,15 @@ export const VehicleCard = ({ vehicle, selected, onClick }: VehicleCardProps) =>
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
           <div className={cn('p-2 rounded-lg', getRiskBg(vehicle.riskLevel))}>
-            <Car className={cn('w-5 h-5', getRiskColor(vehicle.riskLevel))} />
+            <VehicleIcon className={cn('w-5 h-5', getRiskColor(vehicle.riskLevel))} />
           </div>
           <div>
-            <h3 className="font-medium text-foreground">{vehicle.name}</h3>
+            <div className="flex items-center gap-2">
+              <h3 className="font-medium text-foreground">{vehicle.name}</h3>
+              <Badge variant="outline" className={cn('text-[10px] px-1.5 py-0', getBrandColor(vehicle.brand))}>
+                {vehicle.brand}
+              </Badge>
+            </div>
             <p className="text-xs text-muted-foreground">{vehicle.model}</p>
           </div>
         </div>
@@ -65,10 +87,22 @@ export const VehicleCard = ({ vehicle, selected, onClick }: VehicleCardProps) =>
         <MetricMini icon={Droplets} value={vehicle.coolantLevel} unit="%" warn={vehicle.coolantLevel < 80} />
       </div>
 
-      <div className="flex items-center justify-between text-xs text-muted-foreground">
-        <div className="flex items-center gap-1">
-          <MapPin className="w-3 h-3" />
-          {vehicle.location}
+      <div className="flex items-center justify-between text-xs text-muted-foreground border-t border-border/50 pt-2 mt-2">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
+            <MapPin className="w-3 h-3" />
+            {vehicle.location}
+          </div>
+          {vehicle.vehicleType !== 'electric' && (
+            <div className="flex items-center gap-1">
+              <Fuel className="w-3 h-3" />
+              {vehicle.fuelEfficiency} {vehicle.vehicleType === 'two-wheeler' ? 'kmpl' : 'km/l'}
+            </div>
+          )}
+          <div className="flex items-center gap-1">
+            <Star className="w-3 h-3 text-yellow-500" />
+            {vehicle.driverScore}
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <span>{vehicle.lastUpdated}</span>

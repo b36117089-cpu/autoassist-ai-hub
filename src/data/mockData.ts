@@ -3,6 +3,7 @@ export interface Vehicle {
   id: string;
   name: string;
   model: string;
+  brand: 'Hero' | 'Mahindra';
   engineTemp: number;
   tyrePressure: number;
   batteryLevel: number;
@@ -13,19 +14,22 @@ export interface Vehicle {
   lastUpdated: string;
   mileage: number;
   location: string;
+  fuelEfficiency: number;
+  driverScore: number;
+  vehicleType: 'two-wheeler' | 'suv' | 'sedan' | 'truck' | 'electric';
 }
 
 export const vehicles: Vehicle[] = [
-  { id: 'VH-001', name: 'Fleet Alpha 1', model: 'Tesla Model Y', engineTemp: 92, tyrePressure: 34, batteryLevel: 87, brakeWear: 28, coolantLevel: 95, healthScore: 94, riskLevel: 'low', lastUpdated: '2 min ago', mileage: 45230, location: 'Bay Area' },
-  { id: 'VH-002', name: 'Fleet Alpha 2', model: 'Ford F-150', engineTemp: 98, tyrePressure: 31, batteryLevel: 72, brakeWear: 65, coolantLevel: 88, healthScore: 68, riskLevel: 'high', lastUpdated: '1 min ago', mileage: 89120, location: 'Seattle' },
-  { id: 'VH-003', name: 'Fleet Beta 1', model: 'Chevy Bolt', engineTemp: 88, tyrePressure: 33, batteryLevel: 91, brakeWear: 15, coolantLevel: 97, healthScore: 96, riskLevel: 'low', lastUpdated: '3 min ago', mileage: 23450, location: 'Portland' },
-  { id: 'VH-004', name: 'Fleet Beta 2', model: 'RAM 1500', engineTemp: 105, tyrePressure: 28, batteryLevel: 65, brakeWear: 72, coolantLevel: 78, healthScore: 52, riskLevel: 'critical', lastUpdated: '30 sec ago', mileage: 112340, location: 'Denver' },
-  { id: 'VH-005', name: 'Fleet Gamma 1', model: 'Toyota Camry', engineTemp: 90, tyrePressure: 32, batteryLevel: 82, brakeWear: 35, coolantLevel: 92, healthScore: 85, riskLevel: 'low', lastUpdated: '5 min ago', mileage: 67890, location: 'Phoenix' },
-  { id: 'VH-006', name: 'Fleet Gamma 2', model: 'Honda Accord', engineTemp: 94, tyrePressure: 30, batteryLevel: 78, brakeWear: 48, coolantLevel: 85, healthScore: 76, riskLevel: 'medium', lastUpdated: '2 min ago', mileage: 78450, location: 'Austin' },
-  { id: 'VH-007', name: 'Fleet Delta 1', model: 'BMW X5', engineTemp: 96, tyrePressure: 35, batteryLevel: 89, brakeWear: 22, coolantLevel: 94, healthScore: 91, riskLevel: 'low', lastUpdated: '1 min ago', mileage: 34560, location: 'Miami' },
-  { id: 'VH-008', name: 'Fleet Delta 2', model: 'Audi Q7', engineTemp: 101, tyrePressure: 29, batteryLevel: 71, brakeWear: 58, coolantLevel: 82, healthScore: 64, riskLevel: 'high', lastUpdated: '4 min ago', mileage: 98230, location: 'Chicago' },
-  { id: 'VH-009', name: 'Fleet Epsilon 1', model: 'Mercedes GLE', engineTemp: 89, tyrePressure: 34, batteryLevel: 95, brakeWear: 12, coolantLevel: 98, healthScore: 97, riskLevel: 'low', lastUpdated: '1 min ago', mileage: 18920, location: 'NYC' },
-  { id: 'VH-010', name: 'Fleet Epsilon 2', model: 'Volvo XC90', engineTemp: 93, tyrePressure: 32, batteryLevel: 84, brakeWear: 41, coolantLevel: 90, healthScore: 79, riskLevel: 'medium', lastUpdated: '3 min ago', mileage: 56780, location: 'Boston' },
+  { id: 'VH-001', name: 'Fleet Alpha 1', model: 'XUV700', brand: 'Mahindra', vehicleType: 'suv', engineTemp: 92, tyrePressure: 34, batteryLevel: 87, brakeWear: 28, coolantLevel: 95, healthScore: 94, riskLevel: 'low', lastUpdated: '2 min ago', mileage: 45230, location: 'Mumbai', fuelEfficiency: 14.2, driverScore: 92 },
+  { id: 'VH-002', name: 'Fleet Alpha 2', model: 'Thar', brand: 'Mahindra', vehicleType: 'suv', engineTemp: 98, tyrePressure: 31, batteryLevel: 72, brakeWear: 65, coolantLevel: 88, healthScore: 68, riskLevel: 'high', lastUpdated: '1 min ago', mileage: 89120, location: 'Delhi', fuelEfficiency: 11.5, driverScore: 74 },
+  { id: 'VH-003', name: 'Fleet Beta 1', model: 'Splendor Plus', brand: 'Hero', vehicleType: 'two-wheeler', engineTemp: 88, tyrePressure: 33, batteryLevel: 91, brakeWear: 15, coolantLevel: 97, healthScore: 96, riskLevel: 'low', lastUpdated: '3 min ago', mileage: 23450, location: 'Bangalore', fuelEfficiency: 65.0, driverScore: 88 },
+  { id: 'VH-004', name: 'Fleet Beta 2', model: 'Scorpio-N', brand: 'Mahindra', vehicleType: 'suv', engineTemp: 105, tyrePressure: 28, batteryLevel: 65, brakeWear: 72, coolantLevel: 78, healthScore: 52, riskLevel: 'critical', lastUpdated: '30 sec ago', mileage: 112340, location: 'Chennai', fuelEfficiency: 10.8, driverScore: 65 },
+  { id: 'VH-005', name: 'Fleet Gamma 1', model: 'Xtreme 160R', brand: 'Hero', vehicleType: 'two-wheeler', engineTemp: 90, tyrePressure: 32, batteryLevel: 82, brakeWear: 35, coolantLevel: 92, healthScore: 85, riskLevel: 'low', lastUpdated: '5 min ago', mileage: 67890, location: 'Pune', fuelEfficiency: 45.0, driverScore: 81 },
+  { id: 'VH-006', name: 'Fleet Gamma 2', model: 'Bolero', brand: 'Mahindra', vehicleType: 'suv', engineTemp: 94, tyrePressure: 30, batteryLevel: 78, brakeWear: 48, coolantLevel: 85, healthScore: 76, riskLevel: 'medium', lastUpdated: '2 min ago', mileage: 78450, location: 'Hyderabad', fuelEfficiency: 12.3, driverScore: 78 },
+  { id: 'VH-007', name: 'Fleet Delta 1', model: 'XUV400 EV', brand: 'Mahindra', vehicleType: 'electric', engineTemp: 45, tyrePressure: 35, batteryLevel: 89, brakeWear: 22, coolantLevel: 94, healthScore: 91, riskLevel: 'low', lastUpdated: '1 min ago', mileage: 34560, location: 'Kolkata', fuelEfficiency: 0, driverScore: 95 },
+  { id: 'VH-008', name: 'Fleet Delta 2', model: 'Karizma XMR', brand: 'Hero', vehicleType: 'two-wheeler', engineTemp: 101, tyrePressure: 29, batteryLevel: 71, brakeWear: 58, coolantLevel: 82, healthScore: 64, riskLevel: 'high', lastUpdated: '4 min ago', mileage: 98230, location: 'Ahmedabad', fuelEfficiency: 35.0, driverScore: 70 },
+  { id: 'VH-009', name: 'Fleet Epsilon 1', model: 'BE 6e', brand: 'Mahindra', vehicleType: 'electric', engineTemp: 42, tyrePressure: 34, batteryLevel: 95, brakeWear: 12, coolantLevel: 98, healthScore: 97, riskLevel: 'low', lastUpdated: '1 min ago', mileage: 18920, location: 'Jaipur', fuelEfficiency: 0, driverScore: 96 },
+  { id: 'VH-010', name: 'Fleet Epsilon 2', model: 'Passion Pro', brand: 'Hero', vehicleType: 'two-wheeler', engineTemp: 93, tyrePressure: 32, batteryLevel: 84, brakeWear: 41, coolantLevel: 90, healthScore: 79, riskLevel: 'medium', lastUpdated: '3 min ago', mileage: 56780, location: 'Lucknow', fuelEfficiency: 60.0, driverScore: 82 },
 ];
 
 // Predictive Alerts
@@ -45,6 +49,8 @@ export const predictiveAlerts: PredictiveAlert[] = [
   { id: 'ALT-003', vehicleId: 'VH-008', issue: 'Coolant Leak Risk', probability: 65, timeToFailure: '7 days', severity: 'high', component: 'Cooling System' },
   { id: 'ALT-004', vehicleId: 'VH-006', issue: 'Tyre Wear Warning', probability: 54, timeToFailure: '14 days', severity: 'medium', component: 'Suspension' },
   { id: 'ALT-005', vehicleId: 'VH-010', issue: 'Oil Change Due', probability: 45, timeToFailure: '21 days', severity: 'low', component: 'Engine' },
+  { id: 'ALT-006', vehicleId: 'VH-003', issue: 'Chain Lubrication Needed', probability: 40, timeToFailure: '10 days', severity: 'low', component: 'Drive System' },
+  { id: 'ALT-007', vehicleId: 'VH-007', issue: 'Battery Charge Anomaly', probability: 35, timeToFailure: '14 days', severity: 'medium', component: 'EV Battery Pack' },
 ];
 
 // Agent Activity
@@ -63,6 +69,8 @@ export const agentActivities: AgentActivity[] = [
   { id: 'AG-003', agentName: 'Data Analysis Agent', agentType: 'worker', action: 'Processing telematics stream', timestamp: '10:45:20', status: 'success' },
   { id: 'AG-004', agentName: 'Customer Engagement', agentType: 'worker', action: 'Prepared alert for VH-004 owner', timestamp: '10:45:30', status: 'success' },
   { id: 'AG-005', agentName: 'UEBA Agent', agentType: 'worker', action: 'Monitoring agent behaviors', timestamp: '10:45:32', status: 'success' },
+  { id: 'AG-006', agentName: 'Fleet Optimizer', agentType: 'worker', action: 'Optimizing route for Hero fleet', timestamp: '10:46:00', status: 'success' },
+  { id: 'AG-007', agentName: 'EV Analytics Agent', agentType: 'worker', action: 'Analyzing charging patterns for EVs', timestamp: '10:46:15', status: 'pending' },
 ];
 
 // Service Slots
@@ -78,11 +86,11 @@ export interface ServiceSlot {
 }
 
 export const serviceSlots: ServiceSlot[] = [
-  { id: 'SL-001', date: '2024-01-15', time: '09:00 AM', available: true, recommended: false, centerName: 'AutoCare Central', distance: '2.3 mi', technicianCount: 3 },
-  { id: 'SL-002', date: '2024-01-15', time: '10:30 AM', available: true, recommended: true, centerName: 'AutoCare Central', distance: '2.3 mi', technicianCount: 4 },
-  { id: 'SL-003', date: '2024-01-15', time: '02:00 PM', available: true, recommended: false, centerName: 'QuickFix Motors', distance: '4.1 mi', technicianCount: 2 },
-  { id: 'SL-004', date: '2024-01-16', time: '11:00 AM', available: true, recommended: false, centerName: 'AutoCare Central', distance: '2.3 mi', technicianCount: 3 },
-  { id: 'SL-005', date: '2024-01-16', time: '03:30 PM', available: false, recommended: false, centerName: 'Elite Auto Service', distance: '5.8 mi', technicianCount: 5 },
+  { id: 'SL-001', date: '2024-01-15', time: '09:00 AM', available: true, recommended: false, centerName: 'Mahindra First Choice', distance: '2.3 km', technicianCount: 3 },
+  { id: 'SL-002', date: '2024-01-15', time: '10:30 AM', available: true, recommended: true, centerName: 'Mahindra First Choice', distance: '2.3 km', technicianCount: 4 },
+  { id: 'SL-003', date: '2024-01-15', time: '02:00 PM', available: true, recommended: false, centerName: 'Hero MotoCorp Service', distance: '4.1 km', technicianCount: 2 },
+  { id: 'SL-004', date: '2024-01-16', time: '11:00 AM', available: true, recommended: false, centerName: 'Mahindra Authorized Service', distance: '5.5 km', technicianCount: 3 },
+  { id: 'SL-005', date: '2024-01-16', time: '03:30 PM', available: false, recommended: false, centerName: 'Hero Express Service', distance: '3.8 km', technicianCount: 5 },
 ];
 
 // UEBA Logs
@@ -119,10 +127,11 @@ export interface RCAItem {
 }
 
 export const rcaItems: RCAItem[] = [
-  { id: 'RCA-001', defectType: 'Brake Pad Premature Wear', occurrences: 156, rootCause: 'Material composition variance in batch #2847', affectedModels: ['Model Y', 'Model 3'], correctiveAction: 'Replace brake compound supplier, recall affected batches', status: 'in-progress', trend: 'increasing' },
-  { id: 'RCA-002', defectType: 'Battery Cell Degradation', occurrences: 89, rootCause: 'Thermal management software bug v2.3.1', affectedModels: ['Bolt EV', 'Model Y'], correctiveAction: 'OTA update for thermal algorithm, cell replacement program', status: 'open', trend: 'stable' },
-  { id: 'RCA-003', defectType: 'Coolant Reservoir Crack', occurrences: 43, rootCause: 'Injection molding temperature deviation', affectedModels: ['F-150', 'RAM 1500'], correctiveAction: 'Quality gate added, supplier audit scheduled', status: 'resolved', trend: 'decreasing' },
-  { id: 'RCA-004', defectType: 'Tyre Pressure Sensor Drift', occurrences: 67, rootCause: 'Calibration drift in humid conditions', affectedModels: ['Camry', 'Accord'], correctiveAction: 'Firmware update, waterproofing improvement', status: 'in-progress', trend: 'stable' },
+  { id: 'RCA-001', defectType: 'Brake Pad Premature Wear', occurrences: 156, rootCause: 'Material composition variance in batch #2847', affectedModels: ['XUV700', 'Scorpio-N'], correctiveAction: 'Replace brake compound supplier, recall affected batches', status: 'in-progress', trend: 'increasing' },
+  { id: 'RCA-002', defectType: 'Battery Cell Degradation', occurrences: 89, rootCause: 'Thermal management software bug v2.3.1', affectedModels: ['XUV400 EV', 'BE 6e'], correctiveAction: 'OTA update for thermal algorithm, cell replacement program', status: 'open', trend: 'stable' },
+  { id: 'RCA-003', defectType: 'Coolant Reservoir Crack', occurrences: 43, rootCause: 'Injection molding temperature deviation', affectedModels: ['Thar', 'Bolero'], correctiveAction: 'Quality gate added, supplier audit scheduled', status: 'resolved', trend: 'decreasing' },
+  { id: 'RCA-004', defectType: 'Chain Tensioner Issue', occurrences: 67, rootCause: 'Calibration drift in tensioner mechanism', affectedModels: ['Splendor Plus', 'Passion Pro'], correctiveAction: 'Firmware update, tensioner redesign', status: 'in-progress', trend: 'stable' },
+  { id: 'RCA-005', defectType: 'EV Charging Port Malfunction', occurrences: 28, rootCause: 'Water ingress in charging module', affectedModels: ['XUV400 EV', 'BE 6e'], correctiveAction: 'Improved sealing, component replacement', status: 'open', trend: 'increasing' },
 ];
 
 // Chat messages for voice assistant
@@ -134,9 +143,56 @@ export interface ChatMessage {
 }
 
 export const chatHistory: ChatMessage[] = [
-  { id: 'CH-001', role: 'ai', content: 'Hello! I detected a brake pad wear risk in your vehicle VH-004 with an 87% failure probability in the next 48 hours. Would you like me to arrange a service appointment?', timestamp: '10:45:00' },
+  { id: 'CH-001', role: 'ai', content: 'Hello! I detected a brake pad wear risk in your Mahindra Scorpio-N (VH-004) with an 87% failure probability in the next 48 hours. Would you like me to arrange a service appointment?', timestamp: '10:45:00' },
   { id: 'CH-002', role: 'user', content: 'Yes, please schedule it.', timestamp: '10:45:15' },
-  { id: 'CH-003', role: 'ai', content: 'Great! I recommend 10:30 AM tomorrow at AutoCare Central, just 2.3 miles from your location. They have 4 certified technicians available. Should I confirm this slot?', timestamp: '10:45:18' },
+  { id: 'CH-003', role: 'ai', content: 'Great! I recommend 10:30 AM tomorrow at Mahindra First Choice, just 2.3 km from your location. They have 4 certified technicians available. Should I confirm this slot?', timestamp: '10:45:18' },
   { id: 'CH-004', role: 'user', content: 'Yes, confirm it.', timestamp: '10:45:25' },
   { id: 'CH-005', role: 'ai', content: 'Your service is confirmed for tomorrow at 10:30 AM. I\'ll send you a reminder 1 hour before. Is there anything else I can help you with?', timestamp: '10:45:28' },
+];
+
+// Fleet Statistics
+export interface FleetStats {
+  totalVehicles: number;
+  heroVehicles: number;
+  mahindraVehicles: number;
+  evVehicles: number;
+  twoWheelers: number;
+  avgHealthScore: number;
+  criticalAlerts: number;
+  scheduledServices: number;
+}
+
+export const fleetStats: FleetStats = {
+  totalVehicles: 10,
+  heroVehicles: 4,
+  mahindraVehicles: 6,
+  evVehicles: 2,
+  twoWheelers: 4,
+  avgHealthScore: 80,
+  criticalAlerts: 2,
+  scheduledServices: 5,
+};
+
+// Driver Performance Data
+export interface DriverPerformance {
+  vehicleId: string;
+  driverName: string;
+  safetyScore: number;
+  fuelEfficiencyScore: number;
+  onTimeDelivery: number;
+  totalTrips: number;
+  incidents: number;
+}
+
+export const driverPerformance: DriverPerformance[] = [
+  { vehicleId: 'VH-001', driverName: 'Rajesh Kumar', safetyScore: 92, fuelEfficiencyScore: 88, onTimeDelivery: 95, totalTrips: 245, incidents: 0 },
+  { vehicleId: 'VH-002', driverName: 'Amit Singh', safetyScore: 74, fuelEfficiencyScore: 65, onTimeDelivery: 82, totalTrips: 198, incidents: 3 },
+  { vehicleId: 'VH-003', driverName: 'Priya Sharma', safetyScore: 88, fuelEfficiencyScore: 92, onTimeDelivery: 91, totalTrips: 312, incidents: 1 },
+  { vehicleId: 'VH-004', driverName: 'Vikram Patel', safetyScore: 65, fuelEfficiencyScore: 58, onTimeDelivery: 78, totalTrips: 156, incidents: 5 },
+  { vehicleId: 'VH-005', driverName: 'Sunita Reddy', safetyScore: 81, fuelEfficiencyScore: 85, onTimeDelivery: 88, totalTrips: 278, incidents: 1 },
+  { vehicleId: 'VH-006', driverName: 'Manoj Gupta', safetyScore: 78, fuelEfficiencyScore: 72, onTimeDelivery: 85, totalTrips: 203, incidents: 2 },
+  { vehicleId: 'VH-007', driverName: 'Kavita Nair', safetyScore: 95, fuelEfficiencyScore: 96, onTimeDelivery: 98, totalTrips: 167, incidents: 0 },
+  { vehicleId: 'VH-008', driverName: 'Ravi Krishnan', safetyScore: 70, fuelEfficiencyScore: 68, onTimeDelivery: 80, totalTrips: 234, incidents: 4 },
+  { vehicleId: 'VH-009', driverName: 'Anita Joshi', safetyScore: 96, fuelEfficiencyScore: 94, onTimeDelivery: 97, totalTrips: 145, incidents: 0 },
+  { vehicleId: 'VH-010', driverName: 'Suresh Menon', safetyScore: 82, fuelEfficiencyScore: 80, onTimeDelivery: 86, totalTrips: 289, incidents: 2 },
 ];

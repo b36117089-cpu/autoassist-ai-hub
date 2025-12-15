@@ -6,6 +6,65 @@
 
 @layer base {
   :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 192 91% 36%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 192 91% 36%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 222 47% 11%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 192 91% 36%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 220 14% 96%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 192 91% 36%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 14% 92%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 220 13% 88%;
+    --sidebar-ring: 192 91% 36%;
+
+    /* Custom tokens - Light */
+    --glass: 220 14% 96% / 0.8;
+    --glass-border: 220 13% 85% / 0.5;
+    --gradient-primary: linear-gradient(135deg, hsl(192 91% 36%), hsl(220 91% 50%));
+    --gradient-success: linear-gradient(135deg, hsl(142 76% 36%), hsl(160 84% 39%));
+    --gradient-warning: linear-gradient(135deg, hsl(38 92% 50%), hsl(25 95% 53%));
+    --gradient-danger: linear-gradient(135deg, hsl(0 72% 51%), hsl(350 89% 60%));
+    --glow-primary: 0 0 30px hsl(192 91% 36% / 0.2);
+    --glow-success: 0 0 20px hsl(142 76% 36% / 0.2);
+    --glow-warning: 0 0 20px hsl(38 92% 50% / 0.2);
+    --glow-danger: 0 0 20px hsl(0 72% 51% / 0.2);
+  }
+
+  .dark {
     --background: 222 47% 6%;
     --foreground: 210 40% 98%;
 
@@ -40,8 +99,6 @@
     --input: 222 30% 14%;
     --ring: 192 91% 50%;
 
-    --radius: 0.75rem;
-
     --sidebar-background: 222 47% 5%;
     --sidebar-foreground: 210 40% 90%;
     --sidebar-primary: 192 91% 50%;
@@ -51,7 +108,7 @@
     --sidebar-border: 222 30% 15%;
     --sidebar-ring: 192 91% 50%;
 
-    /* Custom tokens */
+    /* Custom tokens - Dark */
     --glass: 222 47% 10% / 0.6;
     --glass-border: 222 30% 20% / 0.5;
     --gradient-primary: linear-gradient(135deg, hsl(192 91% 50%), hsl(220 91% 60%));

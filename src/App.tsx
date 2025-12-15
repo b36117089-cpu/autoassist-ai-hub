@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "./components/theme/ThemeProvider";
 import { AppLayout } from "./components/layout/AppLayout";
 import Dashboard from "./pages/Dashboard";
 import VoiceAssistant from "./pages/VoiceAssistant";
@@ -18,25 +19,27 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/analytics" element={<Analytics />} />
-            <Route path="/compare" element={<FleetComparison />} />
-            <Route path="/vehicle/:id" element={<VehicleDetail />} />
-            <Route path="/voice" element={<VoiceAssistant />} />
-            <Route path="/scheduling" element={<Scheduling />} />
-            <Route path="/security" element={<Security />} />
-            <Route path="/insights" element={<Insights />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="fleet-ui-theme">
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route element={<AppLayout />}>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/analytics" element={<Analytics />} />
+              <Route path="/compare" element={<FleetComparison />} />
+              <Route path="/vehicle/:id" element={<VehicleDetail />} />
+              <Route path="/voice" element={<VoiceAssistant />} />
+              <Route path="/scheduling" element={<Scheduling />} />
+              <Route path="/security" element={<Security />} />
+              <Route path="/insights" element={<Insights />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

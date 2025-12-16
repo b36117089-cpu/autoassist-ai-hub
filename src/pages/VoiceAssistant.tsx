@@ -82,7 +82,7 @@ const VoiceAssistant = () => {
           <div className="flex gap-3 mt-6 w-full">
             <Button 
               className="flex-1 gap-2 bg-primary hover:bg-primary/90"
-              onClick={() => navigate('/scheduling')}
+              onClick={() => navigate('/scheduling?vehicleId=VH-004')}
             >
               <Calendar className="w-4 h-4" />
               Schedule Now
@@ -121,7 +121,7 @@ const VoiceAssistant = () => {
                   <p><strong>Estimated Cost:</strong> ₹2,500 - ₹4,000</p>
                   <p><strong>Service Duration:</strong> 45 minutes</p>
                 </div>
-                <Button className="w-full" onClick={() => { setShowInfoDialog(false); navigate('/scheduling'); }}>
+                <Button className="w-full" onClick={() => { setShowInfoDialog(false); navigate('/scheduling?vehicleId=VH-004'); }}>
                   Schedule Service Now
                 </Button>
               </div>

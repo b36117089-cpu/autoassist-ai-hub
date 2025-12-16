@@ -1,11 +1,12 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { vehicles, predictiveAlerts, agentActivities, Vehicle } from '@/data/mockData';
 import { fleetMetricsHistory } from '@/data/extendedMockData';
 import { VehicleCard } from '@/components/dashboard/VehicleCard';
 import { AlertPanel } from '@/components/dashboard/AlertPanel';
 import { AgentActivityPanel } from '@/components/dashboard/AgentActivityPanel';
 import { TelemetryGauge } from '@/components/dashboard/TelemetryGauge';
-import { Thermometer, Gauge, Battery, Disc, Droplets, RefreshCw, Download, Filter } from 'lucide-react';
+import { Thermometer, Gauge, Battery, Disc, Droplets, RefreshCw, Download, Filter, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { exportFleetReport } from '@/utils/exportPdf';
 import { toast } from '@/hooks/use-toast';
@@ -20,6 +21,7 @@ import {
 const brands = ['All Brands', 'Hero', 'Mahindra'];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(vehicles[3]); // VH-004 critical
   const [selectedBrand, setSelectedBrand] = useState('All Brands');
 
@@ -164,6 +166,15 @@ const Dashboard = () => {
               icon={<Droplets className="w-4 h-4" />}
             />
           </div>
+
+          {/* Schedule Service Button */}
+          <Button 
+            className="w-full gap-2 bg-primary hover:bg-primary/90"
+            onClick={() => navigate(`/scheduling?vehicleId=${selectedVehicle.id}`)}
+          >
+            <Calendar className="w-4 h-4" />
+            Schedule Service for {selectedVehicle.name}
+          </Button>
         </div>
 
         {/* Right Sidebar: Alerts & Activity */}

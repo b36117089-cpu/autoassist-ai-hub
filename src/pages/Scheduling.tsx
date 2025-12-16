@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { serviceSlots, vehicles } from '@/data/mockData';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, MapPin, Users, Star, Check, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, Star, Check, ChevronLeft, ChevronRight, Filter, Car } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   Select,
@@ -25,32 +26,42 @@ const months = [
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
-const years = [2024, 2025, 2026];
-
 const brands = ['All Brands', 'Hero', 'Mahindra'];
 
 const Scheduling = () => {
+  const [searchParams] = useSearchParams();
+  const vehicleId = searchParams.get('vehicleId');
+  
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const years = [currentYear, currentYear + 1, currentYear + 2];
+  
   const [selectedSlot, setSelectedSlot] = useState<string | null>('SL-002');
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [currentMonth, setCurrentMonth] = useState(0); // January
-  const [currentYear, setCurrentYear] = useState(2024);
+  const [displayMonth, setDisplayMonth] = useState(today.getMonth());
+  const [displayYear, setDisplayYear] = useState(currentYear);
   const [selectedBrand, setSelectedBrand] = useState('All Brands');
+  const [selectedVehicleId, setSelectedVehicleId] = useState<string | null>(vehicleId);
+  
+  const selectedVehicle = useMemo(() => {
+    return vehicles.find(v => v.id === selectedVehicleId);
+  }, [selectedVehicleId]);
 
   const handlePrevMonth = () => {
-    if (currentMonth === 0) {
-      setCurrentMonth(11);
-      setCurrentYear(prev => prev - 1);
+    if (displayMonth === 0) {
+      setDisplayMonth(11);
+      setDisplayYear(prev => prev - 1);
     } else {
-      setCurrentMonth(prev => prev - 1);
+      setDisplayMonth(prev => prev - 1);
     }
   };
 
   const handleNextMonth = () => {
-    if (currentMonth === 11) {
-      setCurrentMonth(0);
-      setCurrentYear(prev => prev + 1);
+    if (displayMonth === 11) {
+      setDisplayMonth(0);
+      setDisplayYear(prev => prev + 1);
     } else {
-      setCurrentMonth(prev => prev + 1);
+      setDisplayMonth(prev => prev + 1);
     }
   };
 
@@ -65,6 +76,13 @@ const Scheduling = () => {
       <div>
         <h1 className="text-2xl font-bold text-foreground">Autonomic Scheduling</h1>
         <p className="text-muted-foreground">AI-optimized service appointment booking</p>
+        {selectedVehicle && (
+          <div className="mt-2 flex items-center gap-2 text-sm">
+            <Car className="w-4 h-4 text-primary" />
+            <span className="text-foreground font-medium">{selectedVehicle.name}</span>
+            <span className="text-muted-foreground">• {selectedVehicle.model}</span>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -91,12 +109,27 @@ const Scheduling = () => {
                 </Select>
               </div>
 
+              {/* Vehicle Selection */}
+              <div className="flex items-center gap-2">
+                <Car className="w-4 h-4 text-muted-foreground" />
+                <Select value={selectedVehicleId || ''} onValueChange={setSelectedVehicleId}>
+                  <SelectTrigger className="w-[180px] h-8 bg-background">
+                    <SelectValue placeholder="Select Vehicle" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover">
+                    {vehicles.map((vehicle) => (
+                      <SelectItem key={vehicle.id} value={vehicle.id}>{vehicle.name} ({vehicle.id})</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               {/* Month/Year Navigation */}
               <div className="flex items-center gap-2">
                 <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handlePrevMonth}>
                   <ChevronLeft className="w-4 h-4" />
                 </Button>
-                <Select value={currentMonth.toString()} onValueChange={(v) => setCurrentMonth(parseInt(v))}>
+                <Select value={displayMonth.toString()} onValueChange={(v) => setDisplayMonth(parseInt(v))}>
                   <SelectTrigger className="w-[120px] h-8 bg-background">
                     <SelectValue />
                   </SelectTrigger>
@@ -106,7 +139,7 @@ const Scheduling = () => {
                     ))}
                   </SelectContent>
                 </Select>
-                <Select value={currentYear.toString()} onValueChange={(v) => setCurrentYear(parseInt(v))}>
+                <Select value={displayYear.toString()} onValueChange={(v) => setDisplayYear(parseInt(v))}>
                   <SelectTrigger className="w-[90px] h-8 bg-background">
                     <SelectValue />
                   </SelectTrigger>

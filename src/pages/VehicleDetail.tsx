@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { vehicles, predictiveAlerts } from '@/data/mockData';
 import { maintenanceHistory, componentTrends } from '@/data/extendedMockData';
+import { exportVehicleReport } from '@/utils/exportPdf';
 import { TelemetryGauge } from '@/components/dashboard/TelemetryGauge';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -68,7 +69,7 @@ const VehicleDetail = () => {
           <Badge className={getRiskColor(vehicle.riskLevel)}>
             {vehicle.riskLevel.toUpperCase()} RISK
           </Badge>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" onClick={() => exportVehicleReport(vehicle, predictiveAlerts, vehicleMaintenance)}>
             <FileText className="w-4 h-4 mr-2" /> Export Report
           </Button>
           <Button size="sm" className="bg-primary">

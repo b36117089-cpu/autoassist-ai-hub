@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { vehicles } from '@/data/mockData';
+import { vehicles, predictiveAlerts } from '@/data/mockData';
+import { fleetMetricsHistory } from '@/data/extendedMockData';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -12,8 +13,10 @@ import {
   Droplets,
   TrendingUp,
   TrendingDown,
-  Minus
+  Minus,
+  Download
 } from 'lucide-react';
+import { exportFleetReport } from '@/utils/exportPdf';
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, ResponsiveContainer } from 'recharts';
 
 const FleetComparison = () => {
@@ -65,9 +68,14 @@ const FleetComparison = () => {
           </h1>
           <p className="text-muted-foreground">Compare up to 4 vehicles side-by-side</p>
         </div>
-        <Button variant="outline" onClick={() => setSelectedVehicles([])}>
-          Clear Selection
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={() => exportFleetReport(selectedData, predictiveAlerts.filter(a => selectedVehicles.includes(a.vehicleId)), fleetMetricsHistory)} disabled={selectedData.length < 2}>
+            <Download className="w-4 h-4 mr-2" /> Export PDF
+          </Button>
+          <Button variant="outline" onClick={() => setSelectedVehicles([])}>
+            Clear Selection
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-12 gap-6">

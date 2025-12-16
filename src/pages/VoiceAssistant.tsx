@@ -1,13 +1,21 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { chatHistory } from '@/data/mockData';
 import { Waveform } from '@/components/voice/Waveform';
 import { ChatTranscript } from '@/components/voice/ChatTranscript';
 import { Button } from '@/components/ui/button';
 import { Mic, MicOff, Calendar, Info, Bell, AlertTriangle, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 const VoiceAssistant = () => {
   const [isListening, setIsListening] = useState(false);
+  const [showInfoDialog, setShowInfoDialog] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="p-6 max-w-5xl mx-auto space-y-6">
@@ -72,11 +80,18 @@ const VoiceAssistant = () => {
 
           {/* Action Buttons */}
           <div className="flex gap-3 mt-6 w-full">
-            <Button className="flex-1 gap-2 bg-primary hover:bg-primary/90">
+            <Button 
+              className="flex-1 gap-2 bg-primary hover:bg-primary/90"
+              onClick={() => navigate('/scheduling')}
+            >
               <Calendar className="w-4 h-4" />
               Schedule Now
             </Button>
-            <Button variant="outline" className="flex-1 gap-2">
+            <Button 
+              variant="outline" 
+              className="flex-1 gap-2"
+              onClick={() => setShowInfoDialog(true)}
+            >
               <Info className="w-4 h-4" />
               More Info
             </Button>
@@ -84,6 +99,34 @@ const VoiceAssistant = () => {
               <Bell className="w-4 h-4" />
             </Button>
           </div>
+
+          {/* Info Dialog */}
+          <Dialog open={showInfoDialog} onOpenChange={setShowInfoDialog}>
+            <DialogContent className="bg-card border-border">
+              <DialogHeader>
+                <DialogTitle className="text-foreground">Predicted Issue Details</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div className="p-4 rounded-lg bg-warning/10 border border-warning/20">
+                  <h4 className="font-medium text-foreground mb-2">Brake Pad Wear - VH-004</h4>
+                  <div className="space-y-2 text-sm text-muted-foreground">
+                    <p><strong>Failure Probability:</strong> 87%</p>
+                    <p><strong>Time Frame:</strong> Within 48 hours</p>
+                    <p><strong>Component:</strong> Front brake pads</p>
+                    <p><strong>Current Wear:</strong> 92% worn</p>
+                  </div>
+                </div>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><strong>Recommended Action:</strong> Immediate replacement of front brake pads to prevent safety hazard.</p>
+                  <p><strong>Estimated Cost:</strong> ₹2,500 - ₹4,000</p>
+                  <p><strong>Service Duration:</strong> 45 minutes</p>
+                </div>
+                <Button className="w-full" onClick={() => { setShowInfoDialog(false); navigate('/scheduling'); }}>
+                  Schedule Service Now
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
 
         {/* Chat Transcript */}

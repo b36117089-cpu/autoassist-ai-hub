@@ -1,21 +1,58 @@
 import { useState } from 'react';
-import { serviceSlots } from '@/data/mockData';
+import { serviceSlots, vehicles } from '@/data/mockData';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, MapPin, Users, Star, Check, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, Star, Check, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const serviceCenters = [
-  { id: 'SC-001', name: 'AutoCare Central', distance: '2.3 mi', rating: 4.8, available: 4 },
-  { id: 'SC-002', name: 'QuickFix Motors', distance: '4.1 mi', rating: 4.5, available: 2 },
-  { id: 'SC-003', name: 'Elite Auto Service', distance: '5.8 mi', rating: 4.9, available: 5 },
+  { id: 'SC-001', name: 'AutoCare Central', distance: '2.3 km', rating: 4.8, available: 4 },
+  { id: 'SC-002', name: 'QuickFix Motors', distance: '4.1 km', rating: 4.5, available: 2 },
+  { id: 'SC-003', name: 'Elite Auto Service', distance: '5.8 km', rating: 4.9, available: 5 },
 ];
 
 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const hours = ['8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM'];
 
+const months = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+const years = [2024, 2025, 2026];
+
+const brands = ['All Brands', 'Hero', 'Mahindra'];
+
 const Scheduling = () => {
   const [selectedSlot, setSelectedSlot] = useState<string | null>('SL-002');
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(0); // January
+  const [currentYear, setCurrentYear] = useState(2024);
+  const [selectedBrand, setSelectedBrand] = useState('All Brands');
+
+  const handlePrevMonth = () => {
+    if (currentMonth === 0) {
+      setCurrentMonth(11);
+      setCurrentYear(prev => prev - 1);
+    } else {
+      setCurrentMonth(prev => prev - 1);
+    }
+  };
+
+  const handleNextMonth = () => {
+    if (currentMonth === 11) {
+      setCurrentMonth(0);
+      setCurrentYear(prev => prev + 1);
+    } else {
+      setCurrentMonth(prev => prev + 1);
+    }
+  };
 
   // Generate mock availability heatmap
   const getAvailability = (day: number, hour: number) => {
@@ -33,19 +70,56 @@ const Scheduling = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Calendar */}
         <div className="lg:col-span-2 glass-card p-6">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
             <h2 className="font-semibold text-foreground flex items-center gap-2">
               <Calendar className="w-4 h-4 text-primary" />
               Available Slots
             </h2>
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon" className="h-8 w-8">
-                <ChevronLeft className="w-4 h-4" />
-              </Button>
-              <span className="text-sm font-medium">January 2024</span>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
-                <ChevronRight className="w-4 h-4" />
-              </Button>
+            <div className="flex items-center gap-4 flex-wrap">
+              {/* Brand Filter */}
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-muted-foreground" />
+                <Select value={selectedBrand} onValueChange={setSelectedBrand}>
+                  <SelectTrigger className="w-[140px] h-8 bg-background">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover">
+                    {brands.map((brand) => (
+                      <SelectItem key={brand} value={brand}>{brand}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Month/Year Navigation */}
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handlePrevMonth}>
+                  <ChevronLeft className="w-4 h-4" />
+                </Button>
+                <Select value={currentMonth.toString()} onValueChange={(v) => setCurrentMonth(parseInt(v))}>
+                  <SelectTrigger className="w-[120px] h-8 bg-background">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover">
+                    {months.map((month, idx) => (
+                      <SelectItem key={month} value={idx.toString()}>{month}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select value={currentYear.toString()} onValueChange={(v) => setCurrentYear(parseInt(v))}>
+                  <SelectTrigger className="w-[90px] h-8 bg-background">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover">
+                    {years.map((year) => (
+                      <SelectItem key={year} value={year.toString()}>{year}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleNextMonth}>
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
           </div>
 

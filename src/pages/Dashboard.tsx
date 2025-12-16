@@ -1,27 +1,56 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { vehicles, predictiveAlerts, agentActivities, Vehicle } from '@/data/mockData';
 import { fleetMetricsHistory } from '@/data/extendedMockData';
 import { VehicleCard } from '@/components/dashboard/VehicleCard';
 import { AlertPanel } from '@/components/dashboard/AlertPanel';
 import { AgentActivityPanel } from '@/components/dashboard/AgentActivityPanel';
 import { TelemetryGauge } from '@/components/dashboard/TelemetryGauge';
-import { Thermometer, Gauge, Battery, Disc, Droplets, RefreshCw, Download } from 'lucide-react';
+import { Thermometer, Gauge, Battery, Disc, Droplets, RefreshCw, Download, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { exportFleetReport } from '@/utils/exportPdf';
 import { toast } from '@/hooks/use-toast';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
+const brands = ['All Brands', 'Hero', 'Mahindra'];
 
 const Dashboard = () => {
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(vehicles[3]); // VH-004 critical
+  const [selectedBrand, setSelectedBrand] = useState('All Brands');
+
+  const filteredVehicles = useMemo(() => {
+    if (selectedBrand === 'All Brands') return vehicles;
+    return vehicles.filter(v => v.brand === selectedBrand);
+  }, [selectedBrand]);
 
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Fleet Monitoring Dashboard</h1>
           <p className="text-muted-foreground">Real-time vehicle telematics & predictive insights</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
+          {/* Brand Filter */}
+          <div className="flex items-center gap-2">
+            <Filter className="w-4 h-4 text-muted-foreground" />
+            <Select value={selectedBrand} onValueChange={setSelectedBrand}>
+              <SelectTrigger className="w-[140px] h-9 bg-background">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-popover">
+                {brands.map((brand) => (
+                  <SelectItem key={brand} value={brand}>{brand}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           <Button variant="outline" size="sm" className="gap-2">
             <RefreshCw className="w-4 h-4" />
             Refresh
@@ -46,10 +75,10 @@ const Dashboard = () => {
         <div className="col-span-12 lg:col-span-5 xl:col-span-4">
           <div className="glass-card p-4 mb-4">
             <h2 className="font-semibold text-foreground mb-1">Fleet Overview</h2>
-            <p className="text-sm text-muted-foreground">{vehicles.length} vehicles monitored</p>
+            <p className="text-sm text-muted-foreground">{filteredVehicles.length} vehicles monitored</p>
           </div>
           <div className="space-y-3 max-h-[calc(100vh-280px)] overflow-y-auto pr-2 scrollbar-thin">
-            {vehicles.map((vehicle) => (
+            {filteredVehicles.map((vehicle) => (
               <VehicleCard
                 key={vehicle.id}
                 vehicle={vehicle}

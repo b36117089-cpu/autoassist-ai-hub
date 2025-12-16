@@ -1,5 +1,6 @@
 import { fleetMetricsHistory, performanceScores, failurePredictions, costBreakdown } from '@/data/extendedMockData';
-import { vehicles } from '@/data/mockData';
+import { vehicles, predictiveAlerts } from '@/data/mockData';
+import { exportFleetReport } from '@/utils/exportPdf';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -49,7 +50,7 @@ const Analytics = () => {
           <Button variant="outline" size="sm">
             <Calendar className="w-4 h-4 mr-2" /> Last 6 Months
           </Button>
-          <Button size="sm" className="bg-primary">
+          <Button size="sm" className="bg-primary" onClick={() => exportFleetReport(vehicles, predictiveAlerts, fleetMetricsHistory)}>
             <Download className="w-4 h-4 mr-2" /> Export PDF
           </Button>
         </div>

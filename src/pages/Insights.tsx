@@ -7,6 +7,9 @@ import {
   CheckCircle, Clock, Download, Mail, RefreshCw, Filter, BarChart3, 
   Target, Lightbulb, Zap, ArrowRight 
 } from 'lucide-react';
+import { vehicles, predictiveAlerts } from '@/data/mockData';
+import { fleetMetricsHistory } from '@/data/extendedMockData';
+import { exportFleetReport } from '@/utils/exportPdf';
 import { toast } from '@/hooks/use-toast';
 import {
   Dialog,
@@ -82,6 +85,7 @@ const Insights = () => {
   };
 
   const handleGenerateReport = () => {
+    exportFleetReport(vehicles, predictiveAlerts, fleetMetricsHistory);
     toast({
       title: "Report Generated",
       description: "PDF report has been downloaded to your device.",
@@ -89,9 +93,10 @@ const Insights = () => {
   };
 
   const handleExportData = () => {
+    exportFleetReport(vehicles, predictiveAlerts, fleetMetricsHistory);
     toast({
       title: "Data Exported",
-      description: "CSV export completed successfully.",
+      description: "PDF report downloaded successfully.",
     });
   };
 

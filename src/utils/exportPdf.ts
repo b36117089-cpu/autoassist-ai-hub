@@ -106,7 +106,7 @@ export const exportFleetReport = (
     doc.setFontSize(8);
     doc.setTextColor(150);
     doc.text(`Page ${i} of ${pageCount}`, pageWidth / 2, doc.internal.pageSize.getHeight() - 10, { align: 'center' });
-    doc.text('FleetAI - Predictive Maintenance Dashboard', 14, doc.internal.pageSize.getHeight() - 10);
+    doc.text('AutoAssist - Predictive Car Maintenance Dashboard', 14, doc.internal.pageSize.getHeight() - 10);
   }
   
   doc.save('fleet-report.pdf');

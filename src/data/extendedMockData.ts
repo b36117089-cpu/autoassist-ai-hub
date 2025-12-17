@@ -143,8 +143,7 @@ export interface BrandSummary {
 }
 
 export const brandSummary: BrandSummary[] = [
-  { brand: 'Mahindra', vehicleCount: 6, avgHealthScore: 75, activeAlerts: 4, totalMileage: 379620, maintenanceCost: 185000 },
-  { brand: 'Hero', vehicleCount: 4, avgHealthScore: 81, activeAlerts: 2, totalMileage: 246350, maintenanceCost: 65000 },
+  { brand: 'Mahindra', vehicleCount: 6, avgHealthScore: 80, activeAlerts: 4, totalMileage: 379620, maintenanceCost: 185000 },
 ];
 
 // EV-specific metrics
@@ -160,23 +159,6 @@ export interface EVMetrics {
 }
 
 export const evMetrics: EVMetrics[] = [
-  { vehicleId: 'VH-007', model: 'XUV400 EV', currentCharge: 89, estimatedRange: 378, chargingStatus: 'idle', lastChargeTime: '6 hrs ago', totalKwhConsumed: 4520, regenerativeBraking: 15 },
-  { vehicleId: 'VH-009', model: 'BE 6e', currentCharge: 95, estimatedRange: 425, chargingStatus: 'idle', lastChargeTime: '2 hrs ago', totalKwhConsumed: 2180, regenerativeBraking: 18 },
-];
-
-// Two-wheeler specific metrics
-export interface TwoWheelerMetrics {
-  vehicleId: string;
-  model: string;
-  chainCondition: number;
-  clutchWear: number;
-  sparkPlugHealth: number;
-  airFilterStatus: number;
-}
-
-export const twoWheelerMetrics: TwoWheelerMetrics[] = [
-  { vehicleId: 'VH-003', model: 'Splendor Plus', chainCondition: 85, clutchWear: 22, sparkPlugHealth: 92, airFilterStatus: 88 },
-  { vehicleId: 'VH-005', model: 'Xtreme 160R', chainCondition: 78, clutchWear: 35, sparkPlugHealth: 85, airFilterStatus: 80 },
-  { vehicleId: 'VH-008', model: 'Karizma XMR', chainCondition: 65, clutchWear: 48, sparkPlugHealth: 72, airFilterStatus: 68 },
-  { vehicleId: 'VH-010', model: 'Passion Pro', chainCondition: 82, clutchWear: 28, sparkPlugHealth: 88, airFilterStatus: 85 },
+  { vehicleId: 'VH-005', model: 'XUV400 EV', currentCharge: 89, estimatedRange: 378, chargingStatus: 'idle', lastChargeTime: '6 hrs ago', totalKwhConsumed: 4520, regenerativeBraking: 15 },
+  { vehicleId: 'VH-006', model: 'BE 6e', currentCharge: 95, estimatedRange: 425, chargingStatus: 'idle', lastChargeTime: '2 hrs ago', totalKwhConsumed: 2180, regenerativeBraking: 18 },
 ];

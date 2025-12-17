@@ -72,7 +72,7 @@ const VoiceAssistant = () => {
               <div>
                 <h3 className="font-medium text-foreground">Predicted Issue Detected</h3>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Brake pad wear in VH-004 with 87% failure probability within 48 hours
+                  Brake pad wear in VH-003 with 87% failure probability within 48 hours
                 </p>
               </div>
             </div>
@@ -82,7 +82,7 @@ const VoiceAssistant = () => {
           <div className="flex gap-3 mt-6 w-full">
             <Button 
               className="flex-1 gap-2 bg-primary hover:bg-primary/90"
-              onClick={() => navigate('/scheduling?vehicleId=VH-004')}
+              onClick={() => navigate('/scheduling?vehicleId=VH-003')}
             >
               <Calendar className="w-4 h-4" />
               Schedule Now
@@ -108,7 +108,7 @@ const VoiceAssistant = () => {
               </DialogHeader>
               <div className="space-y-4">
                 <div className="p-4 rounded-lg bg-warning/10 border border-warning/20">
-                  <h4 className="font-medium text-foreground mb-2">Brake Pad Wear - VH-004</h4>
+                  <h4 className="font-medium text-foreground mb-2">Brake Pad Wear - VH-003</h4>
                   <div className="space-y-2 text-sm text-muted-foreground">
                     <p><strong>Failure Probability:</strong> 87%</p>
                     <p><strong>Time Frame:</strong> Within 48 hours</p>
@@ -121,7 +121,7 @@ const VoiceAssistant = () => {
                   <p><strong>Estimated Cost:</strong> ₹2,500 - ₹4,000</p>
                   <p><strong>Service Duration:</strong> 45 minutes</p>
                 </div>
-                <Button className="w-full" onClick={() => { setShowInfoDialog(false); navigate('/scheduling?vehicleId=VH-004'); }}>
+                <Button className="w-full" onClick={() => { setShowInfoDialog(false); navigate('/scheduling?vehicleId=VH-003'); }}>
                   Schedule Service Now
                 </Button>
               </div>

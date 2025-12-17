@@ -144,6 +144,7 @@ export interface BrandSummary {
 
 export const brandSummary: BrandSummary[] = [
   { brand: 'Mahindra', vehicleCount: 6, avgHealthScore: 80, activeAlerts: 4, totalMileage: 379620, maintenanceCost: 185000 },
+  { brand: 'Tata', vehicleCount: 4, avgHealthScore: 83, activeAlerts: 2, totalMileage: 231330, maintenanceCost: 95000 },
 ];
 
 // EV-specific metrics
@@ -161,4 +162,5 @@ export interface EVMetrics {
 export const evMetrics: EVMetrics[] = [
   { vehicleId: 'VH-005', model: 'XUV400 EV', currentCharge: 89, estimatedRange: 378, chargingStatus: 'idle', lastChargeTime: '6 hrs ago', totalKwhConsumed: 4520, regenerativeBraking: 15 },
   { vehicleId: 'VH-006', model: 'BE 6e', currentCharge: 95, estimatedRange: 425, chargingStatus: 'idle', lastChargeTime: '2 hrs ago', totalKwhConsumed: 2180, regenerativeBraking: 18 },
+  { vehicleId: 'VH-010', model: 'Punch EV', currentCharge: 92, estimatedRange: 312, chargingStatus: 'idle', lastChargeTime: '4 hrs ago', totalKwhConsumed: 3240, regenerativeBraking: 16 },
 ];

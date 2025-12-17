@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-const brands = ['All Brands', 'Mahindra'];
+const brands = ['All Brands', 'Mahindra', 'Tata'];
 
 const Dashboard = () => {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ export interface Vehicle {
   id: string;
   name: string;
   model: string;
-  brand: 'Mahindra';
+  brand: 'Mahindra' | 'Tata';
   engineTemp: number;
   tyrePressure: number;
   batteryLevel: number;
@@ -26,6 +26,10 @@ export const vehicles: Vehicle[] = [
   { id: 'VH-004', name: 'Fleet Gamma 1', model: 'Bolero', brand: 'Mahindra', vehicleType: 'suv', engineTemp: 94, tyrePressure: 30, batteryLevel: 78, brakeWear: 48, coolantLevel: 85, healthScore: 76, riskLevel: 'medium', lastUpdated: '2 min ago', mileage: 78450, location: 'Hyderabad', fuelEfficiency: 12.3, driverScore: 78 },
   { id: 'VH-005', name: 'Fleet Delta 1', model: 'XUV400 EV', brand: 'Mahindra', vehicleType: 'electric', engineTemp: 45, tyrePressure: 35, batteryLevel: 89, brakeWear: 22, coolantLevel: 94, healthScore: 91, riskLevel: 'low', lastUpdated: '1 min ago', mileage: 34560, location: 'Kolkata', fuelEfficiency: 0, driverScore: 95 },
   { id: 'VH-006', name: 'Fleet Epsilon 1', model: 'BE 6e', brand: 'Mahindra', vehicleType: 'electric', engineTemp: 42, tyrePressure: 34, batteryLevel: 95, brakeWear: 12, coolantLevel: 98, healthScore: 97, riskLevel: 'low', lastUpdated: '1 min ago', mileage: 18920, location: 'Jaipur', fuelEfficiency: 0, driverScore: 96 },
+  { id: 'VH-007', name: 'Fleet Zeta 1', model: 'Nexon', brand: 'Tata', vehicleType: 'suv', engineTemp: 88, tyrePressure: 33, batteryLevel: 82, brakeWear: 35, coolantLevel: 91, healthScore: 85, riskLevel: 'low', lastUpdated: '3 min ago', mileage: 56780, location: 'Pune', fuelEfficiency: 17.5, driverScore: 88 },
+  { id: 'VH-008', name: 'Fleet Zeta 2', model: 'Harrier', brand: 'Tata', vehicleType: 'suv', engineTemp: 96, tyrePressure: 29, batteryLevel: 70, brakeWear: 55, coolantLevel: 82, healthScore: 72, riskLevel: 'medium', lastUpdated: '4 min ago', mileage: 87650, location: 'Bangalore', fuelEfficiency: 14.8, driverScore: 76 },
+  { id: 'VH-009', name: 'Fleet Eta 1', model: 'Safari', brand: 'Tata', vehicleType: 'suv', engineTemp: 91, tyrePressure: 32, batteryLevel: 85, brakeWear: 40, coolantLevel: 89, healthScore: 82, riskLevel: 'low', lastUpdated: '2 min ago', mileage: 62340, location: 'Ahmedabad', fuelEfficiency: 13.2, driverScore: 84 },
+  { id: 'VH-010', name: 'Fleet Eta 2', model: 'Punch EV', brand: 'Tata', vehicleType: 'electric', engineTemp: 38, tyrePressure: 34, batteryLevel: 92, brakeWear: 18, coolantLevel: 96, healthScore: 93, riskLevel: 'low', lastUpdated: '1 min ago', mileage: 24560, location: 'Lucknow', fuelEfficiency: 0, driverScore: 91 },
 ];
 
 // Predictive Alerts
@@ -44,6 +48,8 @@ export const predictiveAlerts: PredictiveAlert[] = [
   { id: 'ALT-002', vehicleId: 'VH-002', issue: 'Battery Degradation', probability: 72, timeToFailure: '5 days', severity: 'high', component: 'Power System' },
   { id: 'ALT-003', vehicleId: 'VH-004', issue: 'Tyre Wear Warning', probability: 54, timeToFailure: '14 days', severity: 'medium', component: 'Suspension' },
   { id: 'ALT-004', vehicleId: 'VH-005', issue: 'Battery Charge Anomaly', probability: 35, timeToFailure: '14 days', severity: 'medium', component: 'EV Battery Pack' },
+  { id: 'ALT-005', vehicleId: 'VH-008', issue: 'Coolant Level Low', probability: 62, timeToFailure: '7 days', severity: 'high', component: 'Cooling System' },
+  { id: 'ALT-006', vehicleId: 'VH-010', issue: 'EV Motor Vibration', probability: 28, timeToFailure: '21 days', severity: 'low', component: 'EV Motor' },
 ];
 
 // Agent Activity
@@ -153,12 +159,12 @@ export interface FleetStats {
 }
 
 export const fleetStats: FleetStats = {
-  totalVehicles: 6,
+  totalVehicles: 10,
   mahindraVehicles: 6,
-  evVehicles: 2,
-  avgHealthScore: 80,
+  evVehicles: 3,
+  avgHealthScore: 81,
   criticalAlerts: 1,
-  scheduledServices: 4,
+  scheduledServices: 6,
 };
 
 // Driver Performance Data
@@ -179,4 +185,8 @@ export const driverPerformance: DriverPerformance[] = [
   { vehicleId: 'VH-004', driverName: 'Manoj Gupta', safetyScore: 78, fuelEfficiencyScore: 72, onTimeDelivery: 85, totalTrips: 203, incidents: 2 },
   { vehicleId: 'VH-005', driverName: 'Kavita Nair', safetyScore: 95, fuelEfficiencyScore: 96, onTimeDelivery: 98, totalTrips: 167, incidents: 0 },
   { vehicleId: 'VH-006', driverName: 'Anita Joshi', safetyScore: 96, fuelEfficiencyScore: 94, onTimeDelivery: 97, totalTrips: 145, incidents: 0 },
+  { vehicleId: 'VH-007', driverName: 'Priya Sharma', safetyScore: 88, fuelEfficiencyScore: 85, onTimeDelivery: 91, totalTrips: 212, incidents: 1 },
+  { vehicleId: 'VH-008', driverName: 'Suresh Menon', safetyScore: 76, fuelEfficiencyScore: 70, onTimeDelivery: 83, totalTrips: 189, incidents: 3 },
+  { vehicleId: 'VH-009', driverName: 'Ravi Krishnan', safetyScore: 84, fuelEfficiencyScore: 82, onTimeDelivery: 89, totalTrips: 178, incidents: 1 },
+  { vehicleId: 'VH-010', driverName: 'Sunita Reddy', safetyScore: 91, fuelEfficiencyScore: 93, onTimeDelivery: 94, totalTrips: 134, incidents: 0 },
 ];

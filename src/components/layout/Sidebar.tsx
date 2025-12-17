@@ -41,7 +41,7 @@ export const Sidebar = () => {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center">
               <Activity className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="font-semibold text-foreground">FleetAI</span>
+            <span className="font-semibold text-foreground">AutoAssist</span>
           </div>
         )}
         <button

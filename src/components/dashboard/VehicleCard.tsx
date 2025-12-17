@@ -1,6 +1,6 @@
 import { Vehicle } from '@/data/mockData';
 import { cn } from '@/lib/utils';
-import { Car, Thermometer, Battery, Gauge, Disc, Droplets, MapPin, ExternalLink, Bike, Zap, Fuel, Star } from 'lucide-react';
+import { Car, Thermometer, Battery, Gauge, Disc, Droplets, MapPin, ExternalLink, Zap, Fuel, Star, Truck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -31,17 +31,14 @@ const getRiskBg = (risk: Vehicle['riskLevel']) => {
 
 const getVehicleIcon = (vehicleType: Vehicle['vehicleType']) => {
   switch (vehicleType) {
-    case 'two-wheeler': return Bike;
     case 'electric': return Zap;
+    case 'truck': return Truck;
     default: return Car;
   }
 };
 
 const getBrandColor = (brand: Vehicle['brand']) => {
-  switch (brand) {
-    case 'Hero': return 'bg-red-500/20 text-red-400 border-red-500/30';
-    case 'Mahindra': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-  }
+  return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
 };
 
 export const VehicleCard = ({ vehicle, selected, onClick }: VehicleCardProps) => {
@@ -96,7 +93,7 @@ export const VehicleCard = ({ vehicle, selected, onClick }: VehicleCardProps) =>
           {vehicle.vehicleType !== 'electric' && (
             <div className="flex items-center gap-1">
               <Fuel className="w-3 h-3" />
-              {vehicle.fuelEfficiency} {vehicle.vehicleType === 'two-wheeler' ? 'kmpl' : 'km/l'}
+              {vehicle.fuelEfficiency} km/l
             </div>
           )}
           <div className="flex items-center gap-1">

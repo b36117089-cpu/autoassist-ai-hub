@@ -18,11 +18,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-const brands = ['All Brands', 'Hero', 'Mahindra'];
+const brands = ['All Brands', 'Mahindra'];
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(vehicles[3]); // VH-004 critical
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(vehicles[2]); // VH-003 critical
   const [selectedBrand, setSelectedBrand] = useState('All Brands');
 
   const filteredVehicles = useMemo(() => {

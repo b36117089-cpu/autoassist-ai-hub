@@ -26,7 +26,7 @@ const months = [
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
-const brands = ['All Brands', 'Hero', 'Mahindra'];
+const brands = ['All Brands', 'Mahindra'];
 
 const Scheduling = () => {
   const [searchParams] = useSearchParams();
